@@ -143,3 +143,80 @@ window.onload = function() {
     populateBorrowedBooks();
     populateProfile();
 };
+
+// Sample data for books in stock
+const books = [
+    { title: "The Great Gatsby", quantity: 5 },
+    { title: "To Kill a Mockingbird", quantity: 3 },
+    { title: "1984", quantity: 7 },
+    { title: "Pride and Prejudice", quantity: 2 }
+];
+
+// Function to display books in stock
+function displayBooksInStock() {
+    const stockContainer = document.getElementById('books-in-stock');
+    stockContainer.innerHTML = ''; // Clear previous content
+
+    const table = document.createElement('table');
+    const headerRow = table.insertRow();
+    headerRow.insertCell(0).textContent = "Book Title";
+    headerRow.insertCell(1).textContent = "Quantity";
+    headerRow.insertCell(2).textContent = "Action";
+
+    books.forEach(book => {
+        const row = table.insertRow();
+        row.insertCell(0).textContent = book.title;
+        row.insertCell(1).textContent = book.quantity;
+
+        const actionCell = row.insertCell(2);
+        const borrowButton = document.createElement('button');
+        borrowButton.textContent = 'Borrow';
+        borrowButton.onclick = function () {
+            borrowBookFromStock(book.title);
+        };
+        actionCell.appendChild(borrowButton);
+    });
+
+    stockContainer.appendChild(table);
+}
+
+// Function to borrow a book from stock
+function borrowBookFromStock(title) {
+    const book = books.find(b => b.title === title);
+
+    if (book && book.quantity > 0) {
+        book.quantity--; // Decrease the stock quantity
+        addBookToBorrowedBooks(title);
+        alert('You have successfully borrowed "' + title + '".');
+        displayBooksInStock(); // Update stock display
+    } else {
+        alert('Sorry, "' + title + '" is out of stock.');
+    }
+}
+
+// Function to add a borrowed book to the borrowed books table
+function addBookToBorrowedBooks(title) {
+    const table = document.getElementById('borrowed-books-table');
+    const row = table.insertRow();
+    const borrowDate = new Date().toISOString().split('T')[0];
+    const dueDate = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]; // Due in 14 days
+
+    row.insertCell(0).textContent = title;
+    row.insertCell(1).textContent = borrowDate;
+    row.insertCell(2).textContent = dueDate;
+
+    const actionCell = row.insertCell(3);
+    const returnButton = document.createElement('button');
+    returnButton.textContent = 'Return';
+    returnButton.onclick = function () {
+        returnBook(title);
+    };
+    actionCell.appendChild(returnButton);
+}
+
+// Initialize the dashboard by displaying books in stock
+window.onload = function () {
+    populateBorrowedBooks();
+    populateProfile();
+    displayBooksInStock(); // Display the stock when the page loads
+};

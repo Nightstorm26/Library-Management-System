@@ -13,7 +13,7 @@
     <nav>
         <ul>
             <li><a href="#" onclick="showSection('borrowed-books')">Borrowed Books</a></li>
-            <li><a href="#" onclick="showSection('search-books')">Search Books</a></li>
+            <li><a href="#" onclick="showSection('search-books')">Books</a></li>
             <li><a href="#" onclick="showSection('profile')">Profile</a></li>
             <li><a href="#" onclick="logout()">Logout</a></li>
         </ul>
@@ -49,6 +49,8 @@
             <input type="text" id="search-input" placeholder="Enter book title or author">
             <button onclick="searchBooks()">Search</button>
             <div id="search-results"></div>
+            <h2>Available Books</h2>
+            <div id="books-in-stock"></div>
         </div>
         <div id="profile" class="dashboard-section" style="display:none;">
             <h2>Student Profile</h2>

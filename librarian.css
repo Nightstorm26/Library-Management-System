@@ -1,0 +1,117 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+#login-container, #dashboard-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#dashboard-container {
+    display: none;
+    width: 80%;
+    height: 80vh;
+    max-width: 1000px;
+    overflow: hidden; /* Prevent overall container overflow */
+}
+
+input, button {
+    display: block;
+    width: calc(100% - 22px); /* Account for padding and border */
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#dashboard-nav {
+    margin: 20px 0;
+}
+
+#dashboard-content {
+    border: 1px solid #ddd;
+    padding: 20px;
+    height: calc(100% - 140px); /* Adjust based on header and nav height */
+    overflow-y: auto; /* Allow vertical scrolling within content area */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    #dashboard-container {
+        width: 95%;
+        height: 90vh;
+    }
+
+    #dashboard-content {
+        height: calc(100% - 160px); /* Adjust for potentially wrapped nav buttons */
+    }
+}
+
+.book-item {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+.book-item h4 {
+    margin-top: 0;
+    color: #007bff;
+}
+
+.book-item p {
+    margin: 5px 0;
+}
+
+.book-item:nth-child(even) {
+    background-color: #f0f0f0;
+}
+
+#search-container {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#book-search {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+}
+
+#search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+#search-button:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="librarian.css">
+</head>
+<body>
+    <div id="login-container">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div id="dashboard-container" style="display:none;">
+        <h2>Librarian Dashboard</h2>
+        <button onclick="logout()">Logout</button>
+        <div id="dashboard-nav">
+            <button onclick="showBooks()">Manage Books</button>
+            <button onclick="showMembers()">Manage Members</button>
+            <button onclick="showLoans()">Manage Loans</button>
+        </div>
+        <div id="dashboard-content"></div>
+    </div>
+
+    <script src="librarian.js"></script>
+</body>
+</html>

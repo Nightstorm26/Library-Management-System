@@ -427,8 +427,128 @@ function deleteMember(id) {
 }
 
 
+// Simulated database (update with actual members and books data)
+const loans = [
+    { id: 1, member: 'John Doe', book: 'To Kill a Mockingbird', dateBorrowed: '2024-08-01', dueDate: '2024-08-15' },
+    { id: 2, member: 'Jane Smith', book: '1984', dateBorrowed: '2024-08-05', dueDate: '2024-08-19' }
+];
+
 function showLoans() {
     const content = document.getElementById('dashboard-content');
-    content.innerHTML = '<h3>Manage Loans</h3><p>Loan management functionality to be implemented.</p>';
+    content.innerHTML = `
+        <h3>Manage Loans</h3>
+        <div id="search-container">
+            <input type="text" id="loan-search" placeholder="Search by member or book...">
+            <button id="search-button">Search</button>
+        </div>
+        <div id="add-loan-form">
+            <h4>Add New Loan</h4>
+            <select id="loan-member">
+                ${members.map(member => `<option value="${member.name}">${member.name}</option>`).join('')}
+            </select>
+            <select id="loan-book">
+                ${books.map(book => `<option value="${book.title}">${book.title}</option>`).join('')}
+            </select>
+            <input type="date" id="loan-date-borrowed">
+            <input type="date" id="loan-due-date">
+            <button onclick="addLoan()">Add Loan</button>
+        </div>
+        <div id="loan-list"></div>
+    `;
+    displayLoans();
+
+    // Add event listeners for search
+    document.getElementById('loan-search').addEventListener('input', searchLoans);
+    document.getElementById('search-button').addEventListener('click', searchLoans);
 }
+
+function displayLoans() {
+    const loanList = document.getElementById('loan-list');
+    loanList.innerHTML = loans.map(loan => `
+        <div class="loan-item">
+            <div class="loan-info">
+                <h4>${loan.book}</h4>
+                <p><strong>Member:</strong> ${loan.member}</p>
+                <p><strong>Date Borrowed:</strong> ${loan.dateBorrowed}</p>
+                <p><strong>Due Date:</strong> ${loan.dueDate}</p>
+            </div>
+            <div class="loan-actions">
+                <button onclick="editLoan(${loan.id})">Edit</button>
+                <button onclick="deleteLoan(${loan.id})">Delete</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function addLoan() {
+    const member = document.getElementById('loan-member').value;
+    const book = document.getElementById('loan-book').value;
+    const dateBorrowed = document.getElementById('loan-date-borrowed').value;
+    const dueDate = document.getElementById('loan-due-date').value;
+
+    if (member && book && dateBorrowed && dueDate) {
+        const newLoan = {
+            id: loans.length + 1,
+            member,
+            book,
+            dateBorrowed,
+            dueDate
+        };
+        loans.push(newLoan);
+        displayLoans();
+        clearLoanForm();
+    } else {
+        alert('Please fill all fields');
+    }
+}
+
+function clearLoanForm() {
+    document.getElementById('loan-member').value = '';
+    document.getElementById('loan-book').value = '';
+    document.getElementById('loan-date-borrowed').value = '';
+    document.getElementById('loan-due-date').value = '';
+}
+
+function searchLoans(event) {
+    // If the event was triggered by the button click, prevent form submission
+    if (event.type === 'click') {
+        event.preventDefault();
+    }
+
+    const searchTerm = document.getElementById('loan-search').value.toLowerCase();
+    const filteredLoans = loans.filter(loan => 
+        loan.member.toLowerCase().includes(searchTerm) || 
+        loan.book.toLowerCase().includes(searchTerm)
+    );
+
+    displayFilteredLoans(filteredLoans);
+}
+
+function displayFilteredLoans(filteredLoans) {
+    const loanList = document.getElementById('loan-list');
+    const searchTerm = document.getElementById('loan-search').value;
+    
+    if (filteredLoans.length === 0) {
+        loanList.innerHTML = `<p>No loans found matching your search: "${searchTerm}"</p>`;
+    } else {
+        loanList.innerHTML = `
+            <p>Showing results for: "${searchTerm}"</p>
+            ${filteredLoans.map(loan => `
+                <div class="loan-item">
+                    <div class="loan-info">
+                        <h4>${highlightMatch(loan.book, searchTerm)}</h4>
+                        <p><strong>Member:</strong> ${highlightMatch(loan.member, searchTerm)}</p>
+                        <p><strong>Date Borrowed:</strong> ${loan.dateBorrowed}</p>
+                        <p><strong>Due Date:</strong> ${loan.dueDate}</p>
+                    </div>
+                    <div class="loan-actions">
+                        <button onclick="editLoan(${loan.id})">Edit</button>
+                        <button onclick="deleteLoan(${loan.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('')}
+        `;
+    }
+}
+
 

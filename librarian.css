@@ -258,3 +258,29 @@ button:hover {
         margin: 5px 0;
     }
 }
+/* Loans css */
+.loan-item {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+.loan-item h4 {
+    margin-top: 0;
+    color: #007bff;
+}
+
+.loan-item p {
+    margin: 5px 0;
+}
+
+.loan-item:nth-child(even) {
+    background-color: #f0f0f0;
+}
+
+.loan-actions {
+    margin-top: 10px;
+}
+

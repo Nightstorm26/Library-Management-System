@@ -16,7 +16,7 @@ function showSection(sectionId) {
 
 // Function to handle logout (to be implemented)
 function logout() {
-    alert('Logout functionality to be implemented');
+    window.location.href = 'student_login.html'; // Replace with the actual login page URL
 }
 
 // Function to search for books
